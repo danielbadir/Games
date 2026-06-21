@@ -4,428 +4,67 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="color-scheme" content="dark">
   <title>LPagesAppLabs Games — Mobile Games in Development</title>
-  <meta name="description" content="Mobile games in development by LPagesAppLabs. Mini Motor Maze — ¾ isometric racing. Galaxy Diamond — match-3 with AI Director IRIS. Coming to App Store and Google Play.">
+  <meta name="description" content="Mobile games in development by LPagesAppLabs. Mini Motor Maze — ¾ isometric racing. Galaxy Diamond — match-3 puzzle with adaptive AI. Coming to App Store and Google Play.">
   <link rel="canonical" href="https://games.lpagesapplabs.com/" />
   <meta property="og:title" content="LPagesAppLabs Games — Mobile Games in Development" />
   <meta property="og:description" content="Mini Motor Maze and Galaxy Diamond — mobile games built with Unity, coming to App Store and Google Play." />
   <meta property="og:url" content="https://games.lpagesapplabs.com/" />
+  <meta property="og:image" content="https://lpagesapplabs.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="LPagesAppLabs Games — Mobile Games in Development" />
+  <meta name="twitter:description" content="Mini Motor Maze and Galaxy Diamond — mobile games built with Unity, coming to App Store and Google Play." />
+  <meta name="twitter:image" content="https://lpagesapplabs.com/og-image.png" />
+  <meta name="theme-color" content="#0F172A">
   <meta name="robots" content="index, follow">
-  <link rel="icon" href="https://lpagesapplabs.com/favicon.ico" sizes="any">
   <link rel="icon" href="https://lpagesapplabs.com/logo.svg" type="image/svg+xml">
-  <link rel="preconnect" href="https://fonts.bunny.net">
+  <link rel="preconnect" href="https://fonts.bunny.net" crossorigin>
   <link href="https://fonts.bunny.net/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0F172A; --bg2: #111827;
-      --surface: #1E293B; --surface2: #162032;
-      --violet: #8B5CF6; --violet-dim: #7C3AED;
-      --violet-glow: rgba(139,92,246,0.15);
-      --violet-glow2: rgba(139,92,246,0.07);
-      --cyan: #22D3EE;
-      --emerald: #10B981;
-      --amber: #F59E0B;
-      --white: #F8FAFC; --muted: #94A3B8;
-      --border: rgba(139,92,246,0.18);
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg); color: var(--white);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px; line-height: 1.7; overflow-x: hidden;
-    }
-    body::before {
-      content: ''; position: fixed; inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-      pointer-events: none; z-index: 0; opacity: 0.4;
-    }
-    section { position: relative; z-index: 1; }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1.25rem 5%;
-      background: rgba(15,23,42,0.88);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: 1.05rem; letter-spacing: 0.04em;
-      color: var(--white); display: flex; align-items: center; gap: 0.5rem;
-      text-decoration: none;
-    }
-    .nav-logo span { color: var(--violet); }
-    .nav-right { display: flex; align-items: center; gap: 2rem; }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a {
-      font-family: 'DM Mono', monospace; font-size: 0.75rem;
-      color: var(--muted); text-decoration: none;
-      letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--violet); }
-    .nav-platform {
-      font-family: 'DM Mono', monospace; font-size: 0.72rem;
-      color: var(--muted); text-decoration: none;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      border: 1px solid var(--border); padding: 0.35rem 0.8rem;
-      border-radius: 6px; transition: all 0.2s;
-    }
-    .nav-platform:hover { color: var(--cyan); border-color: rgba(34,211,238,0.3); }
-    .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-    .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--muted); border-radius: 2px; }
-    .nav-mobile { display: none; flex-direction: column; background: rgba(15,23,42,0.97); border-top: 1px solid var(--border); padding: 1rem 5%; position: fixed; top: 62px; left: 0; right: 0; z-index: 99; }
-    .nav-mobile a { font-family: 'DM Mono', monospace; font-size: 0.85rem; color: var(--muted); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.2s; }
-    .nav-mobile a:last-child { border-bottom: none; }
-    .nav-mobile a:hover { color: var(--violet); }
-    .nav-mobile.open { display: flex; }
-
-    /* HERO */
-    #hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 10rem 5% 6rem; overflow: hidden;
-    }
-    .hero-glow {
-      position: absolute; width: 700px; height: 700px; border-radius: 50%;
-      background: radial-gradient(circle, rgba(139,92,246,0.11) 0%, transparent 70%);
-      top: 50%; left: 50%; transform: translate(-50%, -50%);
-      pointer-events: none; animation: pulse-glow 6s ease-in-out infinite;
-    }
-    @keyframes pulse-glow {
-      0%, 100% { opacity: 0.7; transform: translate(-50%,-50%) scale(1); }
-      50% { opacity: 1; transform: translate(-50%,-50%) scale(1.08); }
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: 'DM Mono', monospace; font-size: 0.72rem;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--violet); background: var(--violet-glow2);
-      border: 1px solid var(--border);
-      padding: 0.4rem 1rem; border-radius: 999px;
-      margin-bottom: 2rem; animation: fadeUp 0.6s ease both;
-    }
-    .badge-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--violet); animation: blink 2s ease infinite;
-    }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-    h1 {
-      font-family: 'Syne', sans-serif; font-weight: 800;
-      font-size: clamp(2rem, 5vw, 4rem);
-      line-height: 1.15; letter-spacing: -0.02em;
-      margin-bottom: 1.5rem; animation: fadeUp 0.7s 0.1s ease both;
-    }
-    h1 .accent { color: var(--violet); }
-    .hero-sub {
-      font-size: clamp(1rem, 2vw, 1.15rem); color: var(--muted);
-      max-width: 520px; margin: 0 auto 2.8rem; font-weight: 300;
-      animation: fadeUp 0.7s 0.2s ease both;
-    }
-    .btn-group {
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-      animation: fadeUp 0.7s 0.3s ease both;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      padding: 0.85rem 1.8rem; border-radius: 8px;
-      font-family: 'DM Sans', sans-serif; font-size: 0.95rem;
-      font-weight: 500; text-decoration: none; cursor: pointer; transition: all 0.2s;
-    }
-    .btn-primary { background: var(--violet); color: #fff; border: none; }
-    .btn-primary:hover { background: var(--violet-dim); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(139,92,246,0.4); }
-    .btn-secondary { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,0.15); }
-    .btn-secondary:hover { border-color: var(--violet); color: var(--violet); transform: translateY(-2px); }
-    .hero-stat-bar {
-      display: flex; gap: 2.5rem; flex-wrap: wrap; justify-content: center;
-      margin-top: 5rem; padding-top: 3rem;
-      border-top: 1px solid var(--border);
-      animation: fadeUp 0.7s 0.5s ease both;
-    }
-    .stat { text-align: center; }
-    .stat-num { font-family: 'Syne', sans-serif; font-size: 1.6rem; font-weight: 700; color: var(--violet); }
-    .stat-label { font-size: 0.75rem; color: var(--muted); font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* SECTION COMMON */
-    .section-label {
-      font-family: 'DM Mono', monospace; font-size: 0.72rem;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--violet); margin-bottom: 1rem;
-    }
-    .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 700; line-height: 1.2; margin-bottom: 1rem;
-    }
-
-    /* GAMES */
-    #games {
-      padding: 7rem 5%;
-      background: var(--surface2);
-      border-top: 1px solid var(--border);
-    }
-    .games-header { text-align: center; margin-bottom: 4rem; }
-    .games-header p { color: var(--muted); font-size: 1rem; max-width: 520px; margin: 0 auto; }
-
-    .game-block {
-      max-width: 1100px; margin: 0 auto 5rem;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
-    }
-    .game-block:last-child { margin-bottom: 0; }
-    .game-block.reverse { direction: rtl; }
-    .game-block.reverse > * { direction: ltr; }
-
-    .game-info {}
-    .game-tag {
-      display: inline-block; font-size: 0.65rem; letter-spacing: 0.1em;
-      text-transform: uppercase; padding: 0.22rem 0.7rem;
-      border-radius: 4px; margin-bottom: 1rem; font-weight: 500;
-      background: rgba(139,92,246,0.12); color: var(--violet); border: 1px solid rgba(139,92,246,0.28);
-    }
-    .game-tag.amber {
-      background: rgba(245,158,11,0.12); color: var(--amber); border: 1px solid rgba(245,158,11,0.28);
-    }
-    .game-name {
-      font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-      font-weight: 800; margin-bottom: 0.5rem; line-height: 1.1;
-    }
-    .game-engine {
-      font-family: 'DM Mono', monospace; font-size: 0.75rem;
-      color: var(--muted); letter-spacing: 0.06em; margin-bottom: 1.2rem;
-    }
-    .game-desc { color: var(--muted); font-size: 0.95rem; margin-bottom: 2rem; line-height: 1.75; }
-
-    .feature-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 2rem; }
-    .feature-item {
-      display: flex; align-items: flex-start; gap: 0.7rem;
-      font-size: 0.88rem; color: var(--muted);
-    }
-    .feature-check { color: var(--violet); font-weight: 700; flex-shrink: 0; margin-top: 0.1rem; }
-    .feature-check.amber { color: var(--amber); }
-
-    .store-badges { display: flex; gap: 0.7rem; flex-wrap: wrap; }
-    .store-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      font-family: 'DM Mono', monospace; font-size: 0.72rem;
-      padding: 0.4rem 0.9rem; border-radius: 6px;
-      border: 1px solid var(--border); color: var(--muted);
-      letter-spacing: 0.06em; opacity: 0.7;
-    }
-
-    /* GAME VISUAL CARD */
-    .game-visual {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 2rem; position: relative; overflow: hidden;
-    }
-    .game-visual::before {
-      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, transparent, var(--violet), transparent);
-    }
-    .game-visual.amber-card { border-color: rgba(245,158,11,0.22); }
-    .game-visual.amber-card::before {
-      background: linear-gradient(90deg, transparent, var(--amber), transparent);
-    }
-
-    .vis-header {
-      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
-      padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-    .vis-icon { font-size: 2.2rem; }
-    .vis-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; }
-    .vis-sub { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.06em; }
-
-    .vis-row {
-      display: flex; align-items: center; gap: 0.8rem;
-      padding: 0.7rem 0; border-bottom: 1px solid rgba(255,255,255,0.04);
-    }
-    .vis-row:last-child { border-bottom: none; }
-    .vis-label { font-size: 0.82rem; color: var(--muted); flex: 1; }
-    .vis-val {
-      font-family: 'DM Mono', monospace; font-size: 0.78rem;
-      padding: 0.18rem 0.55rem; border-radius: 4px;
-      background: var(--violet-glow2); border: 1px solid rgba(139,92,246,0.22);
-      color: var(--violet); letter-spacing: 0.04em; white-space: nowrap;
-    }
-    .vis-val.amber {
-      background: rgba(245,158,11,0.07); border-color: rgba(245,158,11,0.22); color: var(--amber);
-    }
-    .vis-val.emerald {
-      background: rgba(16,185,129,0.07); border-color: rgba(16,185,129,0.22); color: var(--emerald);
-    }
-
-    .progress-bar {
-      margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.05);
-    }
-    .progress-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
-    .progress-label { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; }
-    .progress-pct { font-family: 'DM Mono', monospace; font-size: 0.7rem; color: var(--violet); }
-    .progress-pct.amber { color: var(--amber); }
-    .bar-track { width: 100%; height: 5px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden; }
-    .bar-fill { height: 100%; border-radius: 4px; background: var(--violet); }
-    .bar-fill.amber { background: var(--amber); }
-
-    /* TIMELINE */
-    #timeline {
-      padding: 7rem 5%;
-    }
-    .timeline-inner { max-width: 800px; margin: 0 auto; }
-    .timeline-header { text-align: center; margin-bottom: 3.5rem; }
-    .timeline-header p { color: var(--muted); font-size: 1rem; margin-top: 0.5rem; }
-    .tl-items { display: flex; flex-direction: column; }
-    .tl-item {
-      display: grid; grid-template-columns: 60px 1fr;
-      gap: 1.5rem; padding: 1.8rem 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04); align-items: start;
-    }
-    .tl-item:last-child { border-bottom: none; }
-    .tl-dot {
-      width: 44px; height: 44px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'DM Mono', monospace; font-size: 0.85rem; flex-shrink: 0;
-    }
-    .tl-dot.done { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: var(--emerald); }
-    .tl-dot.active { background: var(--violet-glow); border: 1px solid rgba(139,92,246,0.35); color: var(--violet); }
-    .tl-dot.next { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); color: var(--muted); }
-    .tl-game { font-family: 'DM Mono', monospace; font-size: 0.68rem; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 0.2rem; }
-    .tl-phase { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
-    .tl-desc { font-size: 0.88rem; color: var(--muted); }
-
-    /* CONTACT */
-    #contact {
-      padding: 6rem 5%;
-      background: var(--surface2);
-      border-top: 1px solid var(--border);
-      text-align: center;
-    }
-    .contact-box {
-      max-width: 520px; margin: 2rem auto 0;
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 12px; padding: 2.5rem;
-    }
-    .contact-box p { color: var(--muted); font-size: 0.95rem; margin-bottom: 1.4rem; }
-    .contact-email {
-      display: inline-block;
-      font-family: 'DM Mono', monospace; font-size: 0.95rem;
-      color: var(--violet); text-decoration: none;
-      padding: 0.5rem 1rem;
-      border: 1px solid var(--border); border-radius: 6px;
-      transition: border-color 0.2s;
-    }
-    .contact-email:hover { border-color: var(--violet); }
-
-    /* FOOTER */
-    footer {
-      padding: 2.5rem 5%; border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem; position: relative; z-index: 1;
-    }
-    .footer-logo {
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 0.95rem;
-      text-decoration: none; color: var(--white);
-    }
-    .footer-logo span { color: var(--violet); }
-    .footer-links { display: flex; gap: 1.8rem; flex-wrap: wrap; }
-    .footer-links a {
-      font-family: 'DM Mono', monospace; font-size: 0.72rem;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none; transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--violet); }
-    .footer-copy { font-family: 'DM Mono', monospace; font-size: 0.72rem; color: var(--muted); opacity: 0.5; }
-
-    /* NOTIFY FORM */
-    .notify-strip {
-      display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
-      background: var(--violet-glow2); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1rem 1.4rem; margin-top: 1.8rem;
-      animation: fadeUp 0.7s 0.45s ease both; max-width: 500px;
-    }
-    .notify-strip p { font-size: 0.85rem; color: var(--muted); margin: 0; white-space: nowrap; }
-    .notify-form { display: flex; gap: 0.5rem; flex: 1; min-width: 200px; }
-    .notify-form input[type="email"] {
-      flex: 1; background: var(--bg); border: 1px solid var(--border);
-      border-radius: 6px; padding: 0.55rem 0.85rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.85rem; color: var(--white);
-      outline: none; transition: border-color 0.2s;
-    }
-    .notify-form input[type="email"]::placeholder { color: var(--muted); opacity: 0.55; }
-    .notify-form input[type="email"]:focus { border-color: var(--violet); }
-    .notify-form button {
-      background: var(--violet); color: #fff; border: none; border-radius: 6px;
-      padding: 0.55rem 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
-      font-weight: 600; cursor: pointer; transition: background 0.2s; white-space: nowrap;
-    }
-    .notify-form button:hover { background: var(--violet-dim); }
-
-    /* SCROLL REVEAL */
-    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.7s ease, transform 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    @media (max-width: 900px) {
-      .game-block { grid-template-columns: 1fr; gap: 2.5rem; }
-      .game-block.reverse { direction: ltr; }
-    }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-hamburger { display: flex; }
-      .nav-right { gap: 1rem; }
-      #hero { padding: 7rem 5% 4rem; }
-      h1 { font-size: clamp(1.9rem, 8vw, 2.8rem); }
-      .hero-stat-bar { gap: 1.5rem; margin-top: 3rem; padding-top: 2rem; }
-      .stat-num { font-size: 1.3rem; }
-      #games { padding: 4rem 5%; }
-      #timeline { padding: 4rem 5%; }
-      #contact { padding: 4rem 5%; }
-      footer { flex-direction: column; text-align: center; align-items: center; }
-      .footer-links { justify-content: center; gap: 1rem; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 
 <nav>
-  <a href="#hero" class="nav-logo"><span>🎮</span> Games</a>
+  <a href="#hero" class="nav-logo"><span class="logo-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.006-.05-.01-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></span> Games</a>
   <div class="nav-right">
     <div class="nav-links">
       <a href="#games">Games</a>
       <a href="#timeline">Roadmap</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="https://lpagesapplabs.com" class="nav-platform">← Platform</a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+    <a href="https://lpagesapplabs.com" class="nav-platform" rel="noopener noreferrer">← Platform</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu" aria-expanded="false" aria-controls="navMobile">
       <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
 <div class="nav-mobile" id="navMobile">
-  <a href="#games" onclick="closeMenu()">Games</a>
-  <a href="#timeline" onclick="closeMenu()">Roadmap</a>
-  <a href="#contact" onclick="closeMenu()">Contact</a>
-  <a href="https://lpagesapplabs.com" onclick="closeMenu()">← Platform</a>
+  <a href="#games">Games</a>
+  <a href="#timeline">Roadmap</a>
+  <a href="#contact">Contact</a>
+  <a href="https://lpagesapplabs.com" rel="noopener noreferrer">← Platform</a>
 </div>
 
+<main id="main-content">
 <!-- HERO -->
 <section id="hero">
   <div class="hero-glow"></div>
   <div class="hero-badge"><span class="badge-dot"></span> In Development · App Store &amp; Google Play</div>
   <h1>Games Built<br><span class="accent">From Scratch</span></h1>
-  <p class="hero-sub">Two original mobile games in active development — a ¾ isometric racer and an AI-directed match-3. No third-party engines repurposed. Built clean, from zero.</p>
+  <p class="hero-sub">Original mobile games in development — a ¾ isometric racer and an AI-directed match-3. Custom game systems built in-house — AI director, progression, music, and abilities all purpose-built.</p>
   <div class="btn-group">
     <a href="#games" class="btn btn-primary">See the Games</a>
     <a href="#timeline" class="btn btn-secondary">View Roadmap</a>
   </div>
   <div class="notify-strip">
-    <p>Get notified when a game launches.</p>
-    <form class="notify-form" data-product="LPagesAppLabs Games" onsubmit="notifyMe(this,event)">
-      <input type="email" placeholder="your@email.com" required autocomplete="email">
+    <p>Get notified when a game launches.<br><span class="notify-sub">Opens your email client. No server, no tracking.</span></p>
+    <form class="notify-form" data-product="LPagesAppLabs Games">
+      <input type="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address">
       <button type="submit">Notify Me</button>
     </form>
   </div>
@@ -442,7 +81,7 @@
   <div class="games-header reveal">
     <div class="section-label">In Development</div>
     <h2 class="section-title">Two Original Games</h2>
-    <p>Both built in-house using Unity 6. Both targeting Android first, then iOS.</p>
+    <p>Both built in-house using Unity. Targeting Android and iOS.</p>
   </div>
 
   <!-- MINI MOTOR MAZE -->
@@ -450,15 +89,14 @@
     <div class="game-info">
       <div class="game-tag">Phase 1 — MVP</div>
       <h2 class="game-name">Mini Motor<br>Maze</h2>
-      <div class="game-engine">Unity 6 · Android → iOS · ¾ Isometric</div>
+      <div class="game-engine">Unity · Android &amp; iOS · ¾ Isometric</div>
       <p class="game-desc">A charming top-down racer where you navigate hand-crafted mazes, collect gems, and use car-specific abilities. The first car — Sunny Coupe — is a lightweight plastic speedster with a turbo boost. Designed around a 3-star level loop with escalating difficulty across 20 Forest Trails levels.</p>
       <div class="feature-list">
         <div class="feature-item"><span class="feature-check">✓</span> ¾ isometric camera with smooth follow</div>
-        <div class="feature-item"><span class="feature-check">✓</span> Car abilities system (AbilityBase architecture)</div>
+        <div class="feature-item"><span class="feature-check">✓</span> Car abilities system with per-car specials</div>
         <div class="feature-item"><span class="feature-check">✓</span> Star rating per level (move-efficiency formula)</div>
         <div class="feature-item"><span class="feature-check">✓</span> Level complete screen with retry &amp; next-level</div>
-        <div class="feature-item"><span class="feature-check">✓</span> All EditMode tests written (20 tests passing)</div>
-        <div class="feature-item"><span class="feature-check">✓</span> Analytics events wired (no Debug.Log-only paths)</div>
+        <div class="feature-item"><span class="feature-check">✓</span> Automated test suite — all systems verified</div>
       </div>
       <div class="store-badges">
         <span class="store-badge">
@@ -473,26 +111,26 @@
     </div>
     <div class="game-visual">
       <div class="vis-header">
-        <span class="vis-icon">🚗</span>
+        <span class="vis-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 17H3v-4l2-5h12l2 5v4h-2"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M3 12h18"/></svg></span>
         <div>
           <div class="vis-title">Sunny Coupe</div>
           <div class="vis-sub">First car · Forest Trails</div>
         </div>
       </div>
-      <div class="vis-row"><span class="vis-label">Engine</span><span class="vis-val">Unity 6 (6000.4.3f1)</span></div>
-      <div class="vis-row"><span class="vis-label">Architecture</span><span class="vis-val">ScriptableObjects</span></div>
-      <div class="vis-row"><span class="vis-label">Input system</span><span class="vis-val">Unity New Input</span></div>
+      <div class="vis-row"><span class="vis-label">Engine</span><span class="vis-val">Unity</span></div>
+      <div class="vis-row"><span class="vis-label">Architecture</span><span class="vis-val">Data-driven design</span></div>
+      
       <div class="vis-row"><span class="vis-label">Camera</span><span class="vis-val">¾ Isometric</span></div>
       <div class="vis-row"><span class="vis-label">Levels (MVP)</span><span class="vis-val">20 handcrafted</span></div>
-      <div class="vis-row"><span class="vis-label">Stars</span><span class="vis-val emerald">&gt;60% moves = 3★</span></div>
-      <div class="vis-row"><span class="vis-label">Axiom A1</span><span class="vis-val emerald">✓ PASS</span></div>
-      <div class="vis-row"><span class="vis-label">Axiom A3</span><span class="vis-val emerald">✓ PASS</span></div>
+      <div class="vis-row"><span class="vis-label">Stars</span><span class="vis-val emerald">3-star efficiency rating</span></div>
+      
+      
       <div class="progress-bar">
         <div class="progress-header">
           <span class="progress-label">Phase 1 Progress</span>
-          <span class="progress-pct">~40%</span>
+          
         </div>
-        <div class="bar-track"><div class="bar-fill" style="width:40%"></div></div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
       </div>
     </div>
   </div>
@@ -502,15 +140,15 @@
     <div class="game-info">
       <div class="game-tag amber">Active Development</div>
       <h2 class="game-name">Galaxy<br>Diamond</h2>
-      <div class="game-engine">Unity 6 · Android → iOS · Match-3</div>
-      <p class="game-desc">A match-3 puzzle game with an AI Director called IRIS that watches your play and responds — placing cursed gems, boosting blessed ones, and shifting the sky background to reflect your momentum. Features procedural music, special gem types, chain scoring, and a full meta-progression system.</p>
+      <div class="game-engine">Unity · Android &amp; iOS · Match-3</div>
+      <p class="game-desc">A match-3 puzzle game with an adaptive AI system that reads player momentum and responds — shifting difficulty without breaking immersion. Features procedural music, special gem types, chain scoring, and a full meta-progression system.</p>
       <div class="feature-list">
-        <div class="feature-item"><span class="feature-check amber">✓</span> IRIS AI Director — 4 states (Idle / In Flow / Frustrated / Acting)</div>
-        <div class="feature-item"><span class="feature-check amber">✓</span> 4 special gem types (ResonanceCore, ResonanceBomb, LineBurst, ColorNova)</div>
-        <div class="feature-item"><span class="feature-check amber">✓</span> Procedural background music (C major pentatonic, 116 BPM)</div>
+        <div class="feature-item"><span class="feature-check amber">✓</span> Adaptive AI difficulty engine</div>
+        <div class="feature-item"><span class="feature-check amber">✓</span> Special gem types with unique chain effects</div>
+        <div class="feature-item"><span class="feature-check amber">✓</span> Procedural background music — adapts to gameplay</div>
         <div class="feature-item"><span class="feature-check amber">✓</span> Chain multiplier scoring (×1–×4+) with escalating colors</div>
         <div class="feature-item"><span class="feature-check amber">✓</span> Crystal quota level-complete mechanic</div>
-        <div class="feature-item"><span class="feature-check amber">✓</span> Full 8×8 board: swap, match, cascade, fill, animations</div>
+        <div class="feature-item"><span class="feature-check amber">✓</span> Full board: swap, match, cascade, fill, animations</div>
       </div>
       <div class="store-badges">
         <span class="store-badge">
@@ -525,25 +163,25 @@
     </div>
     <div class="game-visual amber-card">
       <div class="vis-header">
-        <span class="vis-icon">💎</span>
+        <span class="vis-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#8B5CF6" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="12 3 19.5 9 12 21 4.5 9 12 3"/><polyline points="4.5 9 19.5 9"/></svg></span>
         <div>
-          <div class="vis-title">IRIS Director</div>
-          <div class="vis-sub">AI system · Galaxy Diamond</div>
+          <div class="vis-title">AI System</div>
+          <div class="vis-sub">Adaptive AI · Galaxy Diamond</div>
         </div>
       </div>
-      <div class="vis-row"><span class="vis-label">Engine</span><span class="vis-val amber">Unity 6 · 2D</span></div>
+      <div class="vis-row"><span class="vis-label">Engine</span><span class="vis-val amber">Unity · 2D</span></div>
       <div class="vis-row"><span class="vis-label">Board</span><span class="vis-val amber">8×8 Match-3</span></div>
       <div class="vis-row"><span class="vis-label">Gem types</span><span class="vis-val amber">Up to 9 active</span></div>
       <div class="vis-row"><span class="vis-label">Special gems</span><span class="vis-val amber">4 types</span></div>
-      <div class="vis-row"><span class="vis-label">Director states</span><span class="vis-val amber">Idle / Flow / Frust / Act</span></div>
-      <div class="vis-row"><span class="vis-label">Music</span><span class="vis-val amber">Procedural · 116 BPM</span></div>
-      <div class="vis-row"><span class="vis-label">Monetization</span><span class="vis-val">IAP — server-side only</span></div>
+      <div class="vis-row"><span class="vis-label">AI Director</span><span class="vis-val amber">Adaptive difficulty</span></div>
+      <div class="vis-row"><span class="vis-label">Music</span><span class="vis-val amber">Procedural · adaptive</span></div>
+      <div class="vis-row"><span class="vis-label">Monetization</span><span class="vis-val">In-app purchases</span></div>
       <div class="progress-bar">
         <div class="progress-header">
           <span class="progress-label">Core Engine Progress</span>
-          <span class="progress-pct amber">~70%</span>
+          
         </div>
-        <div class="bar-track"><div class="bar-fill amber" style="width:70%"></div></div>
+        <div class="bar-track"><div class="bar-fill amber"></div></div>
       </div>
     </div>
   </div>
@@ -563,7 +201,7 @@
         <div>
           <div class="tl-game">Galaxy Diamond</div>
           <div class="tl-phase">Core Engine Complete</div>
-          <p class="tl-desc">Full 8×8 board, all 4 special gems, IRIS AI Director, procedural music, chain scoring, and meta-progression all built and running.</p>
+          <p class="tl-desc">Core game engine, AI director, procedural music, chain scoring, and meta-progression all built and running.</p>
         </div>
       </div>
       <div class="tl-item reveal">
@@ -571,7 +209,7 @@
         <div>
           <div class="tl-game">Mini Motor Maze</div>
           <div class="tl-phase">Architecture & Systems Complete</div>
-          <p class="tl-desc">ScriptableObject car system, isometric camera, star tracker, level complete screen, analytics events, and all EditMode tests in place.</p>
+          <p class="tl-desc">Core game systems, isometric camera, progression tracking, and automated test suite all in place.</p>
         </div>
       </div>
       <div class="tl-item reveal">
@@ -622,30 +260,21 @@
   </div>
 </section>
 
+</main>
+
 <footer>
-  <a href="#hero" class="footer-logo"><span>🎮</span> LPagesAppLabs Games</a>
+  <a href="#hero" class="footer-logo"><span class="logo-icon" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="6" y1="11" x2="10" y2="11"/><line x1="8" y1="9" x2="8" y2="13"/><line x1="15" y1="12" x2="15.01" y2="12"/><line x1="18" y1="10" x2="18.01" y2="10"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.006-.05-.01-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></span> LPagesAppLabs Games</a>
   <div class="footer-links">
     <a href="#games">Games</a>
     <a href="#timeline">Roadmap</a>
     <a href="#contact">Contact</a>
     <a href="privacy.html">Privacy</a>
     <a href="terms.html">Terms</a>
-    <a href="https://lpagesapplabs.com" style="color:var(--cyan);">lpagesapplabs.com</a>
+    <a href="https://lpagesapplabs.com" class="footer-platform" rel="noopener noreferrer">lpagesapplabs.com</a>
   </div>
   <div class="footer-copy">© 2026 LPagesAppLabs / D.Badi</div>
 </footer>
 
-<script>
-  function notifyMe(f,e){e.preventDefault();var em=f.querySelector('input').value;var p=f.dataset.product;window.location='mailto:contact@lpagesapplabs.com?subject=Launch+notification:+'+encodeURIComponent(p)+'&body=Please+add+'+encodeURIComponent(em)+'+to+the+launch+list+for+'+encodeURIComponent(p)+'.';}
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  const hamburger = document.getElementById('hamburger');
-  const navMobile = document.getElementById('navMobile');
-  hamburger.addEventListener('click', () => navMobile.classList.toggle('open'));
-  function closeMenu() { navMobile.classList.remove('open'); }
-</script>
+<script src="main.js" defer></script>
 </body>
 </html>
